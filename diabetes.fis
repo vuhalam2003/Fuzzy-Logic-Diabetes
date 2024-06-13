@@ -1,0 +1,80 @@
+[System]
+Name='diabetes'
+Type='mamdani'
+Version=2.0
+NumInputs=3
+NumOutputs=1
+NumRules=29
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='Glucose'
+Range=[0 300]
+NumMFs=5
+MF1='Very_low':'trapmf',[0.90909090909091 53.9090909090909 62.4090909090909 98.4090909090909]
+MF2='low':'trimf',[53 83.75 125]
+MF3='medium':'trimf',[70 111.25 162.5]
+MF4='high':'trimf',[97.5 143.75 200]
+MF5='very_high':'trapmf',[124.090909090909 180.340909090909 199.090909090909 299.090909090909]
+
+[Input2]
+Name='Age'
+Range=[0 100]
+NumMFs=4
+MF1='young':'trapmf',[0 19 21 32.5]
+MF2='middle_age':'trapmf',[20 27.25 37.75 47]
+MF3='old':'trapmf',[32.5 45 49 66.5]
+MF4='very_old':'trapmf',[47 58.75 100 100]
+
+[Input3]
+Name='BMI'
+Range=[0 81]
+NumMFs=6
+MF1='underweight':'trapmf',[0 0 18.48 22.02]
+MF2='obesity_1':'trimf',[27.85 32.9 37.97]
+MF3='obesity_3':'trapmf',[37.97 43.03 81 81]
+MF4='normal_weight':'trimf',[18.48 22.02 27.85]
+MF5='overweight':'trimf',[22.02 27.85 32.9]
+MF6='obesity_2':'trimf',[32.9 37.97 43.03]
+
+[Output1]
+Name='output1'
+Range=[0 1]
+NumMFs=2
+MF1='no':'trimf',[0 0 0.8]
+MF2='yes':'trimf',[0.2 1 1]
+
+[Rules]
+1 1 0, 1 (1) : 1
+1 2 0, 1 (1) : 1
+1 3 0, 1 (1) : 1
+2 1 0, 1 (1) : 1
+2 2 0, 1 (1) : 1
+3 1 0, 1 (1) : 1
+3 2 0, 1 (1) : 1
+4 1 0, 1 (1) : 1
+4 3 0, 2 (1) : 1
+5 1 0, 2 (1) : 1
+5 2 0, 2 (1) : 1
+5 3 0, 2 (1) : 1
+5 4 0, 2 (1) : 1
+1 0 4, 1 (1) : 1
+1 0 5, 1 (1) : 1
+1 0 6, 1 (1) : 1
+2 0 1, 1 (1) : 1
+2 0 4, 1 (1) : 1
+2 0 5, 1 (1) : 1
+2 0 6, 1 (1) : 1
+2 0 2, 1 (1) : 1
+3 0 4, 1 (1) : 1
+3 0 5, 1 (1) : 1
+3 0 6, 1 (1) : 1
+4 0 4, 1 (1) : 1
+5 0 4, 2 (1) : 1
+5 0 5, 2 (1) : 1
+5 0 6, 2 (1) : 1
+5 0 2, 2 (1) : 1
