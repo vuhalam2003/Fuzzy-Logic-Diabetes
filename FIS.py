@@ -4,8 +4,9 @@ import pandas as pd
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
 import importlib
+from sklearn.metrics import f1_score, precision_score, recall_score
 
-data_df=pd.read_csv("data/diabetes.csv")
+data_df=pd.read_csv("fuzzy/data/diabetes.csv")
 clean_data_df = data_df[
     (data_df['Glucose'] != 0) &
     (data_df['BloodPressure'] != 0) &
@@ -128,40 +129,14 @@ if __name__ == '__main__':
     total_sample = gt_np.shape[0]
     accurate_sample = (output_np == gt_np).sum()
     accuracy = (accurate_sample / total_sample) * 100
-    print(total_sample)
-    print(accurate_sample)
-    print(f"{accuracy:.2f}")
+    print(f"Total samples: {total_sample}")
+    print(f"Correctly classified samples: {accurate_sample}")
+    print(f"Accuracy: {accuracy:.2f}%")
 
-    while True:
-        try:
-            glucose_input = float(input('Blood glucose level mg/dL (20.0 ~ 250.0): '))
-            age_input = int(input('Age (15 ~ 100): '))
-            bmi_input = float(input('BMI (15.0 ~ 70.0): '))
-        except Exception as e:
-            print(f"{e} \n\n")
-            continue
+    precision = precision_score(gt_np, output_np)
+    recall = recall_score(gt_np, output_np)
+    f1 = f1_score(gt_np, output_np)
 
-        prediction_inference.input['glucose'] = glucose_input
-        prediction_inference.input['age'] = age_input
-        prediction_inference.input['bmi'] = bmi_input
-
-        prediction_inference.compute()
-
-        confidence_value = prediction_inference.output['prediction']
-        print(f'Confidence Value: {confidence_value:.2f}')
-
-        if confidence_value > classification_threshold:
-            prediction_result = 'Has diabetes.'
-        else:
-            prediction_result = 'Do not have diabetes.'
-
-        print(f'Prediction Result: {prediction_result}')
-
-        prediction.view(sim=prediction_inference)
-
-        quit_program = input('\nPress "q" to quit the program. ')
-        if quit_program.lower() == 'q':
-            print('Program exited.')
-            break
-        plt.close('all')
-        print('\n\n')
+    print(f'Precision: {precision:.2f}')
+    print(f'Recall: {recall:.2f}')
+    print(f'F1 Score: {f1:.2f}')
